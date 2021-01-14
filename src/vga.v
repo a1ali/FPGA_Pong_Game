@@ -1,5 +1,5 @@
 module vga(
-    input CLK,  
+    input CLK, //12MHz
     output HS, VS,
     output [9:0] x,
     output reg [9:0] y,
@@ -23,7 +23,7 @@ begin
     y <= y + 1;
   end
   else begin
-    xc <= xc + 2;
+    xc <= xc + 2; //displaying 2 pixels at a time to make freq 24MHz
   end
   if (y == 524)
   begin
