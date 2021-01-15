@@ -9,7 +9,11 @@ module pong(
 		input p2_down_button,
 		output HS,
 		output VS,
-		output reg [7:0] RGB
+		output reg [7:0] RGB,
+		output [1:0] p1_score, //first one to reach 3 wins 
+		output [1:0] p2_score,
+		output [7:0] SEG,
+		output [2:0] ENABLE
     );
 
 wire [9:0] x, y;
@@ -21,10 +25,13 @@ vga v(.CLK (CLK), .HS (HS), .VS (VS), .x (x), .y (y), .blank (blank));
 wire start;
 reg game_start = 1'b1;
 debouncer start_button(.CLK (CLK), .switch_input(start_btn), .trans_dn(start));
+wire gamestop;
 
 always @(posedge CLK)
  begin
 	if(start)
+		game_start <= ~game_start;
+	else if (gamestop)
 		game_start <= ~game_start;
  end
 //debouncer down_inst(.CLK (CLK), .switch_input(down_button), .trans_dn(down_btn));
@@ -71,9 +78,13 @@ paddle p2(.CLK(CLK), .prescaler(prescaler), .x(x), .y(y), .x_pos(right_paddle), 
 //---------------------------------
 
 ball ball(.CLK(CLK), .start(game_start) , .prescaler(prescaler), .x(x), .y(y), .BAR_X_L(BAR_X_L), .BAR_X_R(BAR_X_R), .BAR_Y_T(BAR_Y_T), .BAR_Y_B(BAR_Y_B),
-			 .BAR2_Y_T(BAR2_Y_T), .BAR2_Y_B(BAR2_Y_B), .BAR2_X_R(BAR2_X_R), .BAR2_X_L(BAR2_X_L), .rd_ball_on(rd_ball_on), .ball_rgb(ball_rgb));
+			 .BAR2_Y_T(BAR2_Y_T), .BAR2_Y_B(BAR2_Y_B), .BAR2_X_R(BAR2_X_R), .BAR2_X_L(BAR2_X_L), .rd_ball_on(rd_ball_on), .ball_rgb(ball_rgb), .p1_score(p1_score), .p2_score(p2_score), .gamestop(gamestop));
 
 
+//---------------------------------
+//7 Segment Score Instances
+//---------------------------------
+refresh_7_seg seg(.CLK(CLK), .p1_score(p1_score), .p2_score(p2_score), .SEG(SEG), .ENABLE(ENABLE));
 //------------------------------------------------------------------
 //									Multiplexing Circuit
 //------------------------------------------------------------------

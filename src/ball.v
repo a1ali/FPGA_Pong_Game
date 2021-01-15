@@ -15,7 +15,11 @@ module ball(
 		input [9:0] BAR2_X_R,
 		input [9:0] BAR2_X_L,
 		output rd_ball_on,
-		output [7:0] ball_rgb
+		output [7:0] ball_rgb,
+		output reg [1:0] p1_score,
+		output reg [1:0] p2_score,
+		output reg gamestop
+		//output reg start
     );
 	 
 localparam MAX_Y = 480;
@@ -78,7 +82,7 @@ always @(posedge CLK)
 		if (ball_counter == prescaler)
 		begin
 			ball_counter <= 0;
-	 
+			gamestop <= 1'b0; //gamestop fas
 			if (BALL_Y_T < 1) //reach top
 			begin
 				BALL_Y_T <= BALL_Y_T + BALL_V_P;
@@ -101,6 +105,34 @@ always @(posedge CLK)
 			begin
 				BALL_X_L <= BALL_X_L + BALL_V_P;
 				p_x_del <= BALL_V_P;
+			end
+			
+			else if (BALL_X_R > BAR_X_R)// go past the right paddle
+			begin
+				p1_score <= p1_score + 1; //increment player 1 score. 
+				//recenter the ball
+				BALL_X_L <= MAX_X/2 - 40;
+				BALL_Y_T <= MAX_Y/2;
+				if (p1_score == 2'd2) //game over p1 wins
+				begin
+					gamestop <= 1'b1; //stop the game reset score
+					p1_score <= 0;
+					p2_score <= 0;
+				end	
+			end
+			
+			else if (BALL_X_L < BAR2_X_L)// go past the left paddle
+			begin
+				p2_score <= p2_score + 1; //increment player 2 score. 
+				//recenter the ball
+				BALL_X_L <= MAX_X/2 - 40;
+				BALL_Y_T <= MAX_Y/2;
+				if (p2_score == 2'd2) //game over p2 wins
+				begin
+					gamestop <= 1'b1; //stop the game
+					p1_score <= 0;
+					p2_score <= 0;
+				end	
 			end
 		 
 			else //continue with previous motion direction 
