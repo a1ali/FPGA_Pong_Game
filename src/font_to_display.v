@@ -26,9 +26,12 @@ wire [2:0] bit_addr;
 wire [7:0] font_word;
 wire font_bit;
 
+/////////////////////////////////////
+//
+//Text on top center
+//
+/////////////////////////////////////	
 reg [6:0] char_addr_l;
-
-
 font_rom font_unit(.CLK(CLK), .addr(rom_addr), .data(font_word));
 //font ROM interface
 //assign char_addr = {buff_y[6:5], buff_x[8:4]};
