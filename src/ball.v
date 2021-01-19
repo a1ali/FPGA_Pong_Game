@@ -16,8 +16,8 @@ module ball(
 		input [9:0] BAR2_X_L,
 		output rd_ball_on,
 		output [7:0] ball_rgb,
-		output reg [1:0] p1_score,
-		output reg [1:0] p2_score,
+		output reg [3:0] p1_score,
+		output reg [3:0] p2_score,
 		output reg gamestop
 		//output reg start
     );
@@ -113,7 +113,7 @@ always @(posedge CLK)
 				//recenter the ball
 				BALL_X_L <= MAX_X/2 - 40;
 				BALL_Y_T <= MAX_Y/2;
-				if (p1_score == 2'd2) //game over p1 wins
+				if (p1_score == 4'd4) //game over p1 wins
 				begin
 					gamestop <= 1'b1; //stop the game reset score
 					p1_score <= 0;
@@ -127,7 +127,7 @@ always @(posedge CLK)
 				//recenter the ball
 				BALL_X_L <= MAX_X/2 - 40;
 				BALL_Y_T <= MAX_Y/2;
-				if (p2_score == 2'd2) //game over p2 wins
+				if (p2_score == 4'd4) //game over p2 wins
 				begin
 					gamestop <= 1'b1; //stop the game
 					p1_score <= 0;

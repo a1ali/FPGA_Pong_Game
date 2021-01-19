@@ -2,7 +2,7 @@
 
 module refresh_7_seg(
 		input CLK,
-		input [1:0] p1_score, p2_score,
+		input [3:0] p1_score, p2_score,
 		output [7:0] SEG,
 		output reg [2:0] ENABLE
     );
