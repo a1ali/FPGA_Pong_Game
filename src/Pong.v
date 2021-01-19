@@ -1,4 +1,9 @@
 `timescale 1ns / 1ps
+//**********************************
+//
+//				TOP MODULE
+//
+//**********************************
 
 module pong(
 		input CLK, //Elbert V2 12MHz
@@ -103,20 +108,9 @@ refresh_7_seg seg(.CLK(CLK), .p1_score(p1_score), .p2_score(p2_score), .SEG(SEG)
 //---------------------------------
 wire text_bit_on, number_on_left, number_on_right, start_region_on;
 
-font2display font(
-		.CLK(CLK),
-		.p1_score(p1_score),
-		.p2_score(p2_score),
-		.x(x),
-		.y(y),
-		//output HS,
-		//output VS,
-		//output reg [7:0] RGB
-		.text_bit_on(text_bit_on),
-		.number_on(number_on_left),
-		.number_on_right(number_on_right),
-		.start_region_on(start_region_on)
-    );
+font2display font(.CLK(CLK), .p1_score(p1_score), .p2_score(p2_score),
+						.x(x), .y(y), .text_bit_on(text_bit_on),
+						.number_on(number_on_left), .number_on_right(number_on_right), .start_region_on(start_region_on));
 
 //------------------------------------------------------------------
 //									Multiplexing Circuit
@@ -129,29 +123,29 @@ begin
 	else
 	 begin
 	 
-	 if(game_start == 1'b0)
-		if (start_region_on)
+	 if(game_start == 1'b0) 
+		if (start_region_on) //initial screen shows how to start game
 			RGB <= 8'b000_111_11;
 		else 
 			RGB <= 8'd0;
 	else	
 	 begin
-			if (bar_on)
+			if (bar_on) //right paddle
 				RGB <= bar_rgb;
 			
-			else if (rd_ball_on)
+			else if (rd_ball_on) //ball 
 				RGB <= ball_rgb;
 		
-			else if (bar2_on)
+			else if (bar2_on) //left paddle
 				RGB <= bar_rgb;
 				
-			else if (text_bit_on)
+			else if (text_bit_on) //PONG title
 				RGB <= 8'b000_111_11;
 
-			else if (number_on_left)
+			else if (number_on_left) //left players score
 				RGB <= 8'b000_111_11;
 
-			else if (number_on_right)
+			else if (number_on_right) //right players score
 				RGB <= 8'b000_111_11;
 			
 			else 
