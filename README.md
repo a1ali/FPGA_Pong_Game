@@ -13,6 +13,7 @@ Below is a gif of the gameplay <br>
 <br>
 <br>
 Below is an image of the FPGA board also showing the score of the two players on the multiplexed seven segment displays. <br>
+<br>
 <img src="Images/fpga_board.jpg"> <br>
 
 
