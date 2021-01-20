@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //**********************************
 //
-//				TOP MODULE
+//	      TOP MODULE
 //
 //**********************************
 
@@ -49,9 +49,9 @@ always @(posedge CLK)
 //debouncer down_inst(.CLK (CLK), .switch_input(down_button), .trans_dn(down_btn));
 
 
-//------------------------------------------------------------------
-//										constants
-//------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
+//								constants
+//------------------------------------------------------------------------------------------------------------------------------------
 localparam MAX_X = 640;
 localparam MAX_Y = 480;
 localparam prescaler = 200000; //slow movement to only update once every 60Hz
@@ -62,9 +62,9 @@ localparam prescaler = 200000; //slow movement to only update once every 60Hz
 wire wall_on, bar_on, rd_ball_on, bar2_on;
 wire [7:0] wall_rgb, bar_rgb, bar2_rgb, ball_rgb;
 
-//------------------------------------------------------------------
-//										body
-//------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
+//							  	  body
+//------------------------------------------------------------------------------------------------------------------------------------
 
 //---------------------------------
 //Paddle Instances
@@ -109,12 +109,12 @@ refresh_7_seg seg(.CLK(CLK), .p1_score(p1_score), .p2_score(p2_score), .SEG(SEG)
 wire text_bit_on, number_on_left, number_on_right, start_region_on;
 
 font2display font(.CLK(CLK), .p1_score(p1_score), .p2_score(p2_score),
-						.x(x), .y(y), .text_bit_on(text_bit_on),
-						.number_on(number_on_left), .number_on_right(number_on_right), .start_region_on(start_region_on));
+		  .x(x), .y(y), .text_bit_on(text_bit_on),
+		  .number_on(number_on_left), .number_on_right(number_on_right), .start_region_on(start_region_on));
 
-//------------------------------------------------------------------
-//									Multiplexing Circuit
-//------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
+//							  Multiplexing Circuit
+//------------------------------------------------------------------------------------------------------------------------------------
 //rgb multiplexing circuit 
 always @*
 begin
@@ -127,7 +127,7 @@ begin
 		if (start_region_on) //initial screen shows how to start game
 			RGB <= 8'b000_111_11;
 		else 
-			RGB <= 8'd0;
+			RGB <= 8'd0; //black background
 	else	
 	 begin
 			if (bar_on) //right paddle
