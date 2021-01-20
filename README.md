@@ -9,7 +9,7 @@ The score is also displayed on the seven segment displays of the FPGA board. <br
 <br>
 Below is a gif of the gameplay <br>
 <br>
-<img src="Images/pong_game.gif" width="1000" height="550"> <br>
+<img src="Images/pong_game.gif" width="1000" height="520"> <br>
 <br>
 <br>
 Below is an image of the FPGA board also showing the score of the two players on the multiplexed seven segment displays. <br>
