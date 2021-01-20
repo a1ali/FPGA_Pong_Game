@@ -8,7 +8,10 @@ A character tile approach to display text to the screen. <br>
 The score is also displayed on the seven segment displays of the FPGA board. <br>
 <br>
 Below is a gif of the gameplay <br>
-<img src="Images/pong_game.gif">
+<img src="Images/pong_game.gif" width="1000" height="500"> <br>
+<br>
+Below is an image of the FPGA board also showing the score of the two players on the multiplexed seven segment displays. <br>
+<img src="Images/fpga_board.jpg"> <br>
 
 
 
